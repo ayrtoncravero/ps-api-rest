@@ -13,4 +13,12 @@ export class UsersService {
     findAll() {
         return this.userRepository.find();
     };
+
+    create(body: any) {
+        const user = this.userRepository.create(body);
+
+        this.userRepository.save(user);
+
+        return `Se creo con exito el usuario: ${body.name} ${body.surname}.`;
+    };
 }
