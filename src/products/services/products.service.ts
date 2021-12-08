@@ -25,4 +25,18 @@ export class ProductsService {
     findOne(id: number) {
         return this.ProductRepository.findOne(id);
     };
+
+    async update(id: number, body: any) {
+        const product = await this.ProductRepository.findOne(id);
+        
+        if(product === undefined) {
+            throw new Error('El producto no existe,');
+        };
+
+        this.ProductRepository.merge(product, body);
+
+        this.ProductRepository.save(product);
+
+        return `Se edito con exito el producto: ${body.name}.`;
+    };
 }
