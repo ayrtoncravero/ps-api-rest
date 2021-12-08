@@ -25,4 +25,14 @@ export class UsersService {
     findOne(id: number) {
         return this.userRepository.findOne(id);
     };
+
+    async update(id: number, body: any) {
+        const user = await this.userRepository.findOne(id);
+
+        this.userRepository.merge(user, body);
+
+        this.userRepository.save(user);
+
+        return `Se actualizo con exito al usuario: ${user.name} ${user.surName}.`;
+    };
 }
