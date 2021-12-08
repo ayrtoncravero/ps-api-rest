@@ -21,4 +21,8 @@ export class UsersService {
 
         return `Se creo con exito el usuario: ${body.name} ${body.surname}.`;
     };
+
+    findOne(id: number) {
+        return this.userRepository.findOne(id);
+    };
 }
