@@ -35,4 +35,10 @@ export class UsersService {
 
         return `Se actualizo con exito al usuario: ${user.name} ${user.surName}.`;
     };
+
+    async delete(id: number) {
+        await this.userRepository.delete(id);
+
+        return `Se elimino con exito el usuario.`;
+    };
 }
