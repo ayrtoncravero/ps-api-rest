@@ -13,4 +13,12 @@ export class ProductsService {
     findAll() {
         return this.ProductRepository.find();
     };
+
+    create(body: any) {
+        const product = this.ProductRepository.create(body);
+
+        this.ProductRepository.save(product);
+
+        return `Se creo con exito el producto: ${body.name}.`;
+    };
 }
