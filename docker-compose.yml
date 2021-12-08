@@ -1,0 +1,13 @@
+version: '3.3'
+
+services:
+  database: 
+    image: postgres:13
+    environment:
+     - POSTGRES_DB=ps_2021
+     - POSTGRES_USER=irton
+     - POSTGRES_PASSWORD=9371
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./postgres_data:/var/lib/postgresql
