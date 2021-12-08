@@ -39,4 +39,10 @@ export class ProductsService {
 
         return `Se edito con exito el producto: ${body.name}.`;
     };
+
+    async delete(id: number) {
+        await this.ProductRepository.delete(id);
+        
+        return `Se elimino con exito el producto.`;
+    };
 }
