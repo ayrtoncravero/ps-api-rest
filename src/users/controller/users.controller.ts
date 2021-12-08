@@ -19,5 +19,5 @@ export class UsersController {
         } catch(error) {
             return error;
         };
-    }
+    };
 }
