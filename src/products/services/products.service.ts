@@ -21,4 +21,8 @@ export class ProductsService {
 
         return `Se creo con exito el producto: ${body.name}.`;
     };
+
+    findOne(id: number) {
+        return this.ProductRepository.findOne(id);
+    };
 }
