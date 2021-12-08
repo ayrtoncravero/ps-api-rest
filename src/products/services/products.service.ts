@@ -9,4 +9,8 @@ export class ProductsService {
         @InjectRepository(Product)
         private ProductRepository: Repository<Product>
     ) {};
+
+    findAll() {
+        return this.ProductRepository.find();
+    };
 }
