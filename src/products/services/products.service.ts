@@ -12,8 +12,14 @@ export class ProductsService {
         private ProductRepository: Repository<Product>
     ) {};
 
-    findAll() {
-        return this.ProductRepository.find();
+    async findAll() {
+        let users = await this.ProductRepository.find();
+        
+        if(!users) {
+            return 'No hay productos para mostrar.';
+        };
+
+        return users;
     };
 
     create(body: any) {
@@ -54,8 +60,6 @@ export class ProductsService {
 }
 
 function validateBody(body: any) {
-    console.log(body);
-
     if(body.name === '') {
         throw new Error('El nombre es requerido.');
     };
@@ -86,7 +90,10 @@ function validateBody(body: any) {
     ) {
         throw new Error('El formato de imagen no es soportado.');
     };
-
+    
+    if(body.size === '') {
+        throw new Error('El talle no puede ser vacio.');
+    };
     if(body.size !== size.S && 
         body.size !== size.M && 
         body.size !== size.L && 
