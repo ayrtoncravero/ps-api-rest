@@ -17,14 +17,13 @@ export class ProductsService {
     };
 
     create(body: any) {
-        //Validation
         validateBody(body);
 
         const product = this.ProductRepository.create(body);
 
-        //this.ProductRepository.save(product);
+        this.ProductRepository.save(product);
 
-        //return `Se creo con exito el producto: ${body.name}.`;
+        return `Se creo con exito el producto: ${body.name}.`;
     };
 
     findOne(id: number) {
