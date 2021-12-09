@@ -15,11 +15,13 @@ export class UsersService {
     };
 
     create(body: any) {
+        validateBody(body);
+
         const user = this.UserRepository.create(body);
 
         this.UserRepository.save(user);
 
-        return `Se creo con exito el usuario: ${body.name} ${body.surname}.`;
+        return `Se creo con exito el usuario: ${body.name} ${body.surName}.`;
     };
 
     findOne(id: number) {
@@ -27,8 +29,10 @@ export class UsersService {
     };
 
     async update(id: number, body: any) {
-        const user = await this.UserRepository.findOne(id);
+        validateBody(body);
 
+        const user = await this.UserRepository.findOne(id);
+        
         this.UserRepository.merge(user, body);
 
         this.UserRepository.save(user);
@@ -42,3 +46,22 @@ export class UsersService {
         return `Se elimino con exito el usuario.`;
     };
 }
+
+function validateBody(body: any) {
+    if(body.name === '') {
+        throw new Error('El nombre es requerido.');
+    };
+
+    if(body.surName === '') {
+        throw new Error('El apellido es requerido.');
+    };
+
+    if(body.email === '') {
+        throw new Error('El correo electronico es requerido.');
+    };
+
+    /* Validar que el correo tenga el formato correcto
+    if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3,4})+$/.test(body.email)) {
+        throw new Error('El correo electronico no tiene un formato invalido.');
+    }; */
+};

@@ -17,16 +17,16 @@ export class ProductsController {
         try {
             return this.ProductService.create(body);
         } catch(error) {
-            return error
+            return `${error}`;
         };
     }
 
-    @Get()
+    @Get(':id')
     getOne(@Param('id') id: number) {
         try {
             return this.ProductService.findOne(id);
         } catch(error) {
-            return error;
+            return `${error}`;
         };
     };
 
@@ -35,7 +35,7 @@ export class ProductsController {
         try {
             return this.ProductService.update(id, body);
         } catch(error) {
-            return error;
+            return `${error}`;
         };
     }
 
@@ -44,7 +44,7 @@ export class ProductsController {
         try {
             return this.ProductService.delete(id);
         } catch(error) {
-            return error;
+            return `${error}`;
         };
     };
 }
