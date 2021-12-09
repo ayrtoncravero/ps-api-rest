@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Body, Injectable } from '@nestjs/common';
 import { Product } from '../entities/product.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -15,11 +15,14 @@ export class ProductsService {
     };
 
     create(body: any) {
+        //Validation
+        validateBody(body);
+
         const product = this.ProductRepository.create(body);
 
-        this.ProductRepository.save(product);
+        //this.ProductRepository.save(product);
 
-        return `Se creo con exito el producto: ${body.name}.`;
+        //return `Se creo con exito el producto: ${body.name}.`;
     };
 
     findOne(id: number) {
@@ -46,3 +49,24 @@ export class ProductsService {
         return `Se elimino con exito el producto.`;
     };
 }
+
+function validateBody(body: any) {
+    console.log(body);
+    if(body.name === '') {
+        throw new Error('El nombre es requerido.');
+    };
+
+    if(body.price === '') {
+        throw new Error('El precio es requerido.');
+    };
+    if(body.price <= 0) {
+        throw new Error('El precio minimo es $1.');
+    };
+    if(isNaN(body.price)) {
+        throw new Error('El precio debe de ser un numero.');
+    };
+
+    if(body.image) {
+        
+    };
+};
