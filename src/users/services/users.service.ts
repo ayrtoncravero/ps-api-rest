@@ -17,11 +17,11 @@ export class UsersService {
     create(body: any) {
         validateBody(body);
 
-        //const user = this.UserRepository.create(body);
+        const user = this.UserRepository.create(body);
 
-        //this.UserRepository.save(user);
+        this.UserRepository.save(user);
 
-        //return `Se creo con exito el usuario: ${body.name} ${body.surName}.`;
+        return `Se creo con exito el usuario: ${body.name} ${body.surName}.`;
     };
 
     findOne(id: number) {
