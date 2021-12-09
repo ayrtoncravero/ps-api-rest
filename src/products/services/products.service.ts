@@ -34,8 +34,10 @@ export class ProductsService {
         const product = await this.ProductRepository.findOne(id);
         
         if(product === undefined) {
-            throw new Error('El producto no existe,');
+            throw new Error('El producto no existe.');
         };
+
+        validateBody(body);
 
         this.ProductRepository.merge(product, body);
 
@@ -53,6 +55,7 @@ export class ProductsService {
 
 function validateBody(body: any) {
     console.log(body);
+
     if(body.name === '') {
         throw new Error('El nombre es requerido.');
     };
