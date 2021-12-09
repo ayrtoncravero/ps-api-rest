@@ -21,7 +21,7 @@ export class ProductsController {
         };
     }
 
-    @Get()
+    @Get(':id')
     getOne(@Param('id') id: number) {
         try {
             return this.ProductService.findOne(id);
