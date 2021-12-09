@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
-import { Repository } from 'typeorm';
+import { Any, Repository } from 'typeorm';
 
 @Injectable()
 export class UsersService {
@@ -15,11 +15,13 @@ export class UsersService {
     };
 
     create(body: any) {
-        const user = this.UserRepository.create(body);
+        validateBody(body);
 
-        this.UserRepository.save(user);
+        //const user = this.UserRepository.create(body);
 
-        return `Se creo con exito el usuario: ${body.name} ${body.surname}.`;
+        //this.UserRepository.save(user);
+
+        //return `Se creo con exito el usuario: ${body.name} ${body.surName}.`;
     };
 
     findOne(id: number) {
@@ -42,3 +44,24 @@ export class UsersService {
         return `Se elimino con exito el usuario.`;
     };
 }
+
+function validateBody(body: any) {
+    console.log(body.email);
+
+    if(body.name === '') {
+        throw new Error('El nombre es requerido.');
+    };
+
+    if(body.surName === '') {
+        throw new Error('El apellido es requerido.');
+    };
+
+    if(body.email === '') {
+        throw new Error('El correo electronico es requerido.');
+    };
+
+    /* Validar que el correo tenga el formato correcto
+    if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3,4})+$/.test(body.email)) {
+        throw new Error('El correo electronico no tiene un formato invalido.');
+    }; */
+};
