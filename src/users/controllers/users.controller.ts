@@ -17,7 +17,7 @@ export class UsersController {
         try {
             return this.UserService.create(body);    
         } catch(error) {
-            return error;    
+            return `${error}`;    
         };
     };
 
@@ -26,7 +26,7 @@ export class UsersController {
         try {
             return this.UserService.findOne(id);
         } catch(error) {
-            return error;
+            return `${error}`; 
         };
     };
 
@@ -35,7 +35,7 @@ export class UsersController {
         try {
             return this.UserService.update(id, body);
         } catch(error) {
-            return error;
+            return `${error}`; 
         };
     };
 
@@ -44,7 +44,7 @@ export class UsersController {
         try {
             return this.UserService.delete(id);
         } catch(error) {
-            return error;
+            return `${error}`; 
         };
     };
 }
