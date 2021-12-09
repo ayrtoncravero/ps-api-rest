@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
-import { Any, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UsersService {
@@ -29,8 +29,10 @@ export class UsersService {
     };
 
     async update(id: number, body: any) {
-        const user = await this.UserRepository.findOne(id);
+        validateBody(body);
 
+        const user = await this.UserRepository.findOne(id);
+        
         this.UserRepository.merge(user, body);
 
         this.UserRepository.save(user);
@@ -46,8 +48,6 @@ export class UsersService {
 }
 
 function validateBody(body: any) {
-    console.log(body.email);
-
     if(body.name === '') {
         throw new Error('El nombre es requerido.');
     };

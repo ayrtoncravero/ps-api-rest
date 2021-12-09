@@ -35,7 +35,7 @@ export class UsersController {
         try {
             return this.UserService.update(id, body);
         } catch(error) {
-            return `${error}`; 
+            return `${error}`;
         };
     };
 
