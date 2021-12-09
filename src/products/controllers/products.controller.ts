@@ -17,7 +17,7 @@ export class ProductsController {
         try {
             return this.ProductService.create(body);
         } catch(error) {
-            return error
+            return `${error}`;
         };
     }
 
