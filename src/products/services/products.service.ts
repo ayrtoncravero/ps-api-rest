@@ -2,6 +2,8 @@ import { Body, Injectable } from '@nestjs/common';
 import { Product } from '../entities/product.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { validImages } from '../enums/images.enum';
+import { size } from '../enums/size.enum';
 
 @Injectable()
 export class ProductsService {
@@ -66,7 +68,30 @@ function validateBody(body: any) {
         throw new Error('El precio debe de ser un numero.');
     };
 
-    if(body.image) {
-        
+    if(body.image === '') {
+        throw new Error('La imagen es requerida.');
     };
+
+    let route = body.image;
+
+	var extension = route.substring(route.lastIndexOf('.') + 1).toLowerCase();
+
+    if(
+        extension !== validImages.JPG && 
+        extension !== validImages.PNG && 
+        extension !== validImages.TIFF && 
+        extension !== validImages.BMP
+    ) {
+        throw new Error('El formato de imagen no es soportado.');
+    };
+
+    if(body.size !== size.S && 
+        body.size !== size.M && 
+        body.size !== size.L && 
+        body.size !== size.XL && 
+        body.size !== size.XXL
+    ) {
+        throw new Error('El talle no es soportado.');
+    };
+
 };
