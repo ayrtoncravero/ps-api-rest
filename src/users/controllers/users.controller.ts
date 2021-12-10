@@ -9,7 +9,11 @@ export class UsersController {
 
     @Get()
     getAll() {
-        return this.UserService.findAll();
+        try {
+            return this.UserService.findAll();
+        } catch(error) {
+            return `${error}`;
+        };
     }
 
     @Post() 
@@ -21,12 +25,20 @@ export class UsersController {
         };
     };
 
-    @Get(':id')
+    /* @Get(':id')
     getOne(@Param('id') id: number) {
         try {
             return this.UserService.findOne(id);
         } catch(error) {
             return `${error}`; 
+        };
+    }; */
+    @Get(':id')
+    getOne(@Param('id') id: number) {
+        try {
+            return this.UserService.findOne(id);
+        } catch(error) {
+            return `${error}`;
         };
     };
 
@@ -35,8 +47,8 @@ export class UsersController {
         try {
             return this.UserService.update(id, body);
         } catch(error) {
-            return `Error: ${error}`;
-        };
+            return `${error}`;
+        }
     };
 
     @Delete(':id')

@@ -9,7 +9,11 @@ export class ProductsController {
 
     @Get()
     getAll() {
-        return this.ProductService.findAll();
+        try {
+            return this.ProductService.findAll();
+        } catch(error) {
+            return `${error}`;
+        };
     };
 
     @Post()

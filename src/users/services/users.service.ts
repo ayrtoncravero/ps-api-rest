@@ -14,8 +14,7 @@ export class UsersService {
         let users = await this.UserRepository.find();
 
         if(!users) {
-            /* return `No existen usuarios`; */
-            throw new Error('No existen usuarios');
+            throw new Error('No existen usuarios.');
         };
 
         return users;
@@ -23,6 +22,12 @@ export class UsersService {
 
     create(body: any) {
         validateBody(body);
+        
+        const regex = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/; 
+
+        if(!regex.test(body.email)) {
+            throw new Error('El correo electronico no tiene un formato invalido.');
+        }; 
 
         const user = this.UserRepository.create(body);
 
@@ -32,24 +37,48 @@ export class UsersService {
     };
 
     async findOne(id: number) {
+        if(isNaN(id)) {
+            return 'Se produjo un error al buscar el usuario.';
+        };
+
         let user = await this.UserRepository.findOne(id);
 
         if(!user) {
-            return `El usuario no existe.`;
+            return "El usuario no existe.";
         };
 
         return user;
     };
 
     async update(id: number, body: any) {
-        validateBody(body);
+        if(isNaN(id)) {
+            return 'Se produjo un error al buscar el usuario.';
+        };
 
-        const user = await this.UserRepository.findOne(id);
+        if(body.name === '') {
+            return 'El nombre es requerido.';
+        };
+
+        if(body.surName === '') {
+            return 'El apellido es requerido.';
+        };
+
+        if(body.email === '') {
+            return 'El correo electronico es requerido.';
+        };
+
+        const regex = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/; 
+
+        if(!regex.test(body.email)) {
+            return 'El correo electronico no tiene un formato invalido.';
+        }; 
+
+        let user = await this.UserRepository.findOne(id);
 
         if(!user) {
             return 'No existe el usuario.';
         };
-        
+
         this.UserRepository.merge(user, body);
 
         this.UserRepository.save(user);
@@ -58,6 +87,10 @@ export class UsersService {
     };
 
     async delete(id: number) {
+        if(isNaN(id)) {
+            return 'Se produjo un error al buscar el usuario.';
+        };
+
         let user = await this.UserRepository.findOne(id);
 
         if(!user) {
@@ -83,8 +116,9 @@ function validateBody(body: any) {
         throw new Error('El correo electronico es requerido.');
     };
 
-    /* Validar que el correo tenga el formato correcto
-    if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3,4})+$/.test(body.email)) {
+    //Validar que el correo tenga el formato correcto
+    /* if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3,4})+$/.test(body.email)) {
+        console.log(body.email);
         throw new Error('El correo electronico no tiene un formato invalido.');
-    }; */
+    };  */
 };

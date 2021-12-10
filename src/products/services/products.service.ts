@@ -33,6 +33,10 @@ export class ProductsService {
     };
 
     async findOne(id: number) {
+        if(isNaN(id)) {
+            return 'Se produjo un error al buscar el producto';
+        };
+
         let product = await this.ProductRepository.findOne(id);
 
         if(!product) {
@@ -43,7 +47,52 @@ export class ProductsService {
     };
 
     async update(id: number, body: any) {
-        validateBody(body);
+        if(isNaN(id)) {
+            return 'Se produjo un error al buscar el producto';
+        };
+
+        if(body.name === '') {
+            return 'El nombre es requerido.';
+        };
+
+        if(body.price === '') {
+            return 'El precio es requerido.';
+        };
+        if(isNaN(body.price)) {
+            return 'El precio debe de ser un número.';
+        };
+        if(body.price <= 0) {
+            return 'El precio minimo es $1.';
+        };
+
+        if(body.image === '') {
+            return 'La imagen es requerida.';
+        };
+    
+        let route = body.image;
+    
+        var extension = route.substring(route.lastIndexOf('.') + 1).toLowerCase();
+    
+        if(
+            extension !== validImages.JPG && 
+            extension !== validImages.PNG && 
+            extension !== validImages.TIFF && 
+            extension !== validImages.BMP
+        ) {
+            return 'El formato de imagen no es soportado.';
+        };
+        
+        if(body.size === '') {
+            return 'El talle es requerido.';
+        };
+        if(body.size !== size.S && 
+            body.size !== size.M && 
+            body.size !== size.L && 
+            body.size !== size.XL && 
+            body.size !== size.XXL
+        ) {
+            return 'El talle no es soportado.';
+        };
 
         const product = await this.ProductRepository.findOne(id);
         
@@ -59,6 +108,10 @@ export class ProductsService {
     };
 
     async delete(id: number) {
+        if(isNaN(id)) {
+            return 'Se produjo un error al buscar el producto';
+        };
+
         let product = await this.ProductRepository.findOne(id);
 
         if(!product) {
@@ -104,7 +157,7 @@ function validateBody(body: any) {
     };
     
     if(body.size === '') {
-        throw new Error('El talle no puede ser vacio.');
+        throw new Error('El talle es requerido.');
     };
     if(body.size !== size.S && 
         body.size !== size.M && 
