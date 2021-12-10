@@ -12,8 +12,14 @@ export class ProductsService {
         private ProductRepository: Repository<Product>
     ) {};
 
-    findAll() {
-        return this.ProductRepository.find();
+    async findAll() {
+        let product = await this.ProductRepository.find();
+        
+        if(!product) {
+            return 'No hay productos para mostrar.';
+        };
+
+        return product;
     };
 
     create(body: any) {
@@ -26,18 +32,24 @@ export class ProductsService {
         return `Se creo con exito el producto: ${body.name}.`;
     };
 
-    findOne(id: number) {
-        return this.ProductRepository.findOne(id);
+    async findOne(id: number) {
+        let product = await this.ProductRepository.findOne(id);
+
+        if(!product) {
+            return 'No existe el producto.';
+        };
+
+        return product;
     };
 
     async update(id: number, body: any) {
+        validateBody(body);
+
         const product = await this.ProductRepository.findOne(id);
         
-        if(product === undefined) {
-            throw new Error('El producto no existe.');
+        if(!product) {
+            return 'El producto no existe.';
         };
-
-        validateBody(body);
 
         this.ProductRepository.merge(product, body);
 
@@ -47,15 +59,19 @@ export class ProductsService {
     };
 
     async delete(id: number) {
-        await this.ProductRepository.delete(id);
+        let product = await this.ProductRepository.findOne(id);
+
+        if(!product) {
+            return 'No existe el producto.';
+        };
+
+        await this.ProductRepository.delete(id)
         
         return `Se elimino con exito el producto.`;
     };
 }
 
 function validateBody(body: any) {
-    console.log(body);
-
     if(body.name === '') {
         throw new Error('El nombre es requerido.');
     };
@@ -86,7 +102,10 @@ function validateBody(body: any) {
     ) {
         throw new Error('El formato de imagen no es soportado.');
     };
-
+    
+    if(body.size === '') {
+        throw new Error('El talle no puede ser vacio.');
+    };
     if(body.size !== size.S && 
         body.size !== size.M && 
         body.size !== size.L && 
