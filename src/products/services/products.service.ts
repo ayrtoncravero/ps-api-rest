@@ -13,13 +13,13 @@ export class ProductsService {
     ) {};
 
     async findAll() {
-        let users = await this.ProductRepository.find();
+        let product = await this.ProductRepository.find();
         
-        if(!users) {
+        if(!product) {
             return 'No hay productos para mostrar.';
         };
 
-        return users;
+        return product;
     };
 
     create(body: any) {
@@ -32,18 +32,24 @@ export class ProductsService {
         return `Se creo con exito el producto: ${body.name}.`;
     };
 
-    findOne(id: number) {
-        return this.ProductRepository.findOne(id);
+    async findOne(id: number) {
+        let product = await this.ProductRepository.findOne(id);
+
+        if(!product) {
+            return 'No existe el producto.';
+        };
+
+        return product;
     };
 
     async update(id: number, body: any) {
+        validateBody(body);
+
         const product = await this.ProductRepository.findOne(id);
         
-        if(product === undefined) {
-            throw new Error('El producto no existe.');
+        if(!product) {
+            return 'El producto no existe.';
         };
-
-        validateBody(body);
 
         this.ProductRepository.merge(product, body);
 
@@ -53,7 +59,13 @@ export class ProductsService {
     };
 
     async delete(id: number) {
-        await this.ProductRepository.delete(id);
+        let product = await this.ProductRepository.findOne(id);
+
+        if(!product) {
+            return 'No existe el producto.';
+        };
+
+        await this.ProductRepository.delete(id)
         
         return `Se elimino con exito el producto.`;
     };

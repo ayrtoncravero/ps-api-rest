@@ -10,8 +10,15 @@ export class UsersService {
         private UserRepository: Repository<User>
     ){};
 
-    findAll() {
-        return this.UserRepository.find();
+    async findAll() {
+        let users = await this.UserRepository.find();
+
+        if(!users) {
+            /* return `No existen usuarios`; */
+            throw new Error('No existen usuarios');
+        };
+
+        return users;
     };
 
     create(body: any) {
@@ -24,14 +31,24 @@ export class UsersService {
         return `Se creo con exito el usuario: ${body.name} ${body.surName}.`;
     };
 
-    findOne(id: number) {
-        return this.UserRepository.findOne(id);
+    async findOne(id: number) {
+        let user = await this.UserRepository.findOne(id);
+
+        if(!user) {
+            return `El usuario no existe.`;
+        };
+
+        return user;
     };
 
     async update(id: number, body: any) {
         validateBody(body);
 
         const user = await this.UserRepository.findOne(id);
+
+        if(!user) {
+            return 'No existe el usuario.';
+        };
         
         this.UserRepository.merge(user, body);
 
@@ -41,9 +58,15 @@ export class UsersService {
     };
 
     async delete(id: number) {
+        let user = await this.UserRepository.findOne(id);
+
+        if(!user) {
+            throw new Error('El usuario no existe.');
+        };
+
         await this.UserRepository.delete(id);
 
-        return `Se elimino con exito el usuario.`;
+        return 'Se elimino con exito el usuario.';
     };
 }
 

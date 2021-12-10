@@ -17,7 +17,7 @@ export class UsersController {
         try {
             return this.UserService.create(body);    
         } catch(error) {
-            return `${error}`;    
+            return `${error}`;
         };
     };
 
@@ -35,16 +35,16 @@ export class UsersController {
         try {
             return this.UserService.update(id, body);
         } catch(error) {
-            return `${error}`;
+            return `Error: ${error}`;
         };
     };
 
     @Delete(':id')
-    delete(@Param('id') id: number) {
+    async delete(@Param('id') id: number) {
         try {
-            return this.UserService.delete(id);
+            return await this.UserService.delete(id);
         } catch(error) {
-            return `${error}`; 
+            return `${error}`;
         };
     };
 }
