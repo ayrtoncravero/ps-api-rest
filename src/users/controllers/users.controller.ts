@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Post, Param, Put, Delete, HttpCode } from '@nestjs/common';
+import { 
+    Body, 
+    Controller, 
+    Get, 
+    Post, 
+    Param, 
+    Put, 
+    Delete, 
+    HttpCode 
+} from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 import { 
     ApiTags,
@@ -9,7 +18,8 @@ import {
     ApiBody,
 } from '@nestjs/swagger';
 import { User } from '../entities/user.entity';
-import { UserDto } from 'src/application/dtos/user/user.dto';
+import { CreateUserDto } from '../dtos/create.user.dto';
+import { UpdateUserDto } from '../dtos/update.user.dto';
 
 @ApiTags('users')
 @Controller('api/users')
@@ -54,9 +64,9 @@ export class UsersController {
     @ApiBody({
         type: User,
     })
-    create(@Body() UserDto: UserDto) {
+    create(@Body() CreateUserDto: CreateUserDto) {
         try {
-            return this.UserService.create(UserDto);    
+            return this.UserService.create(CreateUserDto);    
         } catch(error) {
             return `${error}`;
         };
@@ -75,9 +85,9 @@ export class UsersController {
     @ApiBadRequestResponse({
         description: 'El usuario no pudo encontrarse.'
     })
-    getOne(@Param('id') id: number) {
+    getOne(@Param('id') FindOneDto: number) {
         try {
-            return this.UserService.findOne(id);
+            return this.UserService.findOne(FindOneDto);
         } catch(error) {
             return `${error}`;
         };
@@ -98,16 +108,16 @@ export class UsersController {
     @ApiBody({
         type: User,
     })
-    update(@Param('id') id: number, UserDto: UserDto) {
+    update(@Param('id') UpdateIdUserDto: number, @Body() UpdateUserDto: UpdateUserDto) {
         try {
-            return this.UserService.update(id, UserDto);
+            return this.UserService.update(UpdateIdUserDto, UpdateUserDto);
         } catch(error) {
             return `${error}`;
         }
     };
 
     @Delete(':id')
-    @HttpCode(204)
+    @HttpCode(200)
     @ApiOperation({
         summary: 'Eliminacion de un usuario.'
     })
@@ -118,9 +128,9 @@ export class UsersController {
     @ApiBadRequestResponse({
         description: 'El usuario no pudo eliminarse.',
     })
-    async delete(@Param('id') id: number) {
+    async delete(@Param('id') DeleteIdUserDto: number) {
         try {
-            return await this.UserService.delete(id);
+            return await this.UserService.delete(DeleteIdUserDto);
         } catch(error) {
             return `${error}`;
         };
