@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put } from '@nestjs/common';
+import { 
+Body, 
+    Controller, 
+    Delete, 
+    Get, 
+    HttpCode, 
+    Param, 
+    Post, 
+    Put 
+} from '@nestjs/common';
 import { ProductsService } from '../services/products.service';
 import { 
     ApiTags,
@@ -9,7 +18,8 @@ import {
     ApiBody,
 } from '@nestjs/swagger';
 import { Product } from '../entities/product.entity';
-import { ProductDto } from 'src/application/dtos/product/product.dto';
+import { CreateProductDto } from 'src/products/dtos/create.product.dto';
+import { UpdateProductDto } from 'src/products/dtos/update.product.dto';
 
 @ApiTags('products')
 @Controller('api/products')
@@ -22,13 +32,11 @@ export class ProductsController {
     @ApiOperation({
         summary: 'Obtiene todos los productos.'
     })
-    @ApiResponse(
-        {
-            status: 200,
-            description: 'Una lista con todos los usuarios.',
-            type: Product,
-        }
-    )
+    @ApiResponse({
+        status: 200,
+        description: 'Una lista con todos los usuarios.',
+        type: Product,
+    })
     getAll() {
         try {
             return this.ProductService.findAll();
@@ -42,12 +50,10 @@ export class ProductsController {
     @ApiOperation({
         summary: 'Crea un producto.',
     })
-    @ApiResponse(
-        {
-            status: 201,
-            description: 'El producto fue creado correctamente.'
-        }
-    )
+    @ApiResponse({
+        status: 201,
+        description: 'El producto fue creado correctamente.'
+    })
     @ApiBadRequestResponse({
         description: 'El producto no pudo ser creado.'
     })
@@ -58,9 +64,9 @@ export class ProductsController {
     @ApiBody({
         type: Product,
     })
-    create(@Body() ProductDto: ProductDto) {
+    create(@Body() CreateProductDto: CreateProductDto) {
         try {
-            return this.ProductService.create(ProductDto);
+            return this.ProductService.create(CreateProductDto);
         } catch(error) {
             return `${error}`;
         };
@@ -79,9 +85,9 @@ export class ProductsController {
     @ApiBadRequestResponse({
         description: 'El producto no pudo encontrarse.',
     })
-    getOne(@Param('id') id: number) {
+    getOne(@Param('id') FindOneDto: number) {
         try {
-            return this.ProductService.findOne(id);
+            return this.ProductService.findOne(FindOneDto);
         } catch(error) {
             return `${error}`;
         };
@@ -102,16 +108,16 @@ export class ProductsController {
     @ApiBody({
         type: Product,
     })
-    update(@Param('id') id: number, ProductDto: ProductDto) {
+    update(@Param('id') UpdateIdProductDto: number, @Body() UpdateProductDto: UpdateProductDto) {
         try {
-            return this.ProductService.update(id, ProductDto);
+            return this.ProductService.update(UpdateIdProductDto, UpdateProductDto);
         } catch(error) {
             return `${error}`;
         };
     }
 
     @Delete(':id')
-    @HttpCode(204)
+    @HttpCode(200)
     @ApiOperation({
         summary: 'Eliminacion de un producto.'
     })
@@ -122,9 +128,9 @@ export class ProductsController {
     @ApiBadRequestResponse({
         description: 'El producto no pudo eliminarse.'
     })
-    delete(@Param('id') id: number) {
+    delete(@Param('id') DeleteProductDto: number) {
         try {
-            return this.ProductService.delete(id);
+            return this.ProductService.delete(DeleteProductDto);
         } catch(error) {
             return `${error}`;
         };
