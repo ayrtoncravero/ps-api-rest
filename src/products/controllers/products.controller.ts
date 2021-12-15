@@ -9,6 +9,7 @@ import {
     ApiBody,
 } from '@nestjs/swagger';
 import { Product } from '../entities/product.entity';
+import { ProductDto } from 'src/application/dtos/product/product.dto';
 
 @ApiTags('products')
 @Controller('api/products')
@@ -57,9 +58,9 @@ export class ProductsController {
     @ApiBody({
         type: Product,
     })
-    create(@Body() body: any) {
+    create(@Body() ProductDto: ProductDto) {
         try {
-            return this.ProductService.create(body);
+            return this.ProductService.create(ProductDto);
         } catch(error) {
             return `${error}`;
         };
@@ -101,9 +102,9 @@ export class ProductsController {
     @ApiBody({
         type: Product,
     })
-    update(@Param('id') id: number, @Body() body: any) {
+    update(@Param('id') id: number, ProductDto: ProductDto) {
         try {
-            return this.ProductService.update(id, body);
+            return this.ProductService.update(id, ProductDto);
         } catch(error) {
             return `${error}`;
         };
