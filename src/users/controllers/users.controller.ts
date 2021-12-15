@@ -9,6 +9,7 @@ import {
     ApiBody,
 } from '@nestjs/swagger';
 import { User } from '../entities/user.entity';
+import { UserDto } from 'src/application/dtos/user/user.dto';
 
 @ApiTags('users')
 @Controller('api/users')
@@ -53,9 +54,9 @@ export class UsersController {
     @ApiBody({
         type: User,
     })
-    create(@Body() body: any) {
+    create(@Body() UserDto: UserDto) {
         try {
-            return this.UserService.create(body);    
+            return this.UserService.create(UserDto);    
         } catch(error) {
             return `${error}`;
         };
@@ -97,9 +98,9 @@ export class UsersController {
     @ApiBody({
         type: User,
     })
-    update(@Param('id') id: number, @Body() body: any) {
+    update(@Param('id') id: number, UserDto: UserDto) {
         try {
-            return this.UserService.update(id, body);
+            return this.UserService.update(id, UserDto);
         } catch(error) {
             return `${error}`;
         }
