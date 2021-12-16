@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
 import { Repository } from 'typeorm';
+import { CreateUserDto } from '../dtos/create.user.dto';
 
 @Injectable()
 export class UsersService {
@@ -20,20 +21,20 @@ export class UsersService {
         return users;
     };
 
-    create(body: any) {
-        validateBody(body);
+    create(CreateUserDto: CreateUserDto) {
+        validateBody(CreateUserDto);
         
         const regex = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/; 
 
-        if(!regex.test(body.email)) {
+        if(!regex.test(CreateUserDto.email)) {
             throw new Error('El correo electronico no tiene un formato invalido.');
         }; 
 
-        const user = this.UserRepository.create(body);
+        const user = this.UserRepository.create(CreateUserDto);
 
         this.UserRepository.save(user);
 
-        return `Se creo con exito el usuario: ${body.name} ${body.surName}.`;
+        return `Se creo con exito el usuario: ${CreateUserDto.name} ${CreateUserDto.surName}.`;
     };
 
     async findOne(id: number) {

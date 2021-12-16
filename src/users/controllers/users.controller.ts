@@ -6,7 +6,9 @@ import {
     Param, 
     Put, 
     Delete, 
-    HttpCode 
+    HttpCode,
+    Res,
+    Response,
 } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 import { 
@@ -20,6 +22,7 @@ import {
 import { User } from '../entities/user.entity';
 import { CreateUserDto } from '../dtos/create.user.dto';
 import { UpdateUserDto } from '../dtos/update.user.dto';
+import { Readable } from 'stream';
 
 @ApiTags('users')
 @Controller('api/users')
@@ -64,7 +67,7 @@ export class UsersController {
     @ApiBody({
         type: User,
     })
-    create(@Body() CreateUserDto: CreateUserDto) {
+    create(@Body() CreateUserDto: CreateUserDto, @Res({ passthrough: true }) response: Response) {
         try {
             return this.UserService.create(CreateUserDto);    
         } catch(error) {
