@@ -1,9 +1,10 @@
-import { Body, Injectable } from '@nestjs/common';
+import { Body, HttpCode, HttpStatus, Injectable } from '@nestjs/common';
 import { Product } from '../entities/product.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { validImages } from '../enums/images.enum';
 import { size } from '../enums/size.enum';
+import { HttpException } from '@nestjs/common';
 
 @Injectable()
 export class ProductsService {
@@ -13,13 +14,11 @@ export class ProductsService {
     ) {};
 
     async findAll() {
-        let product = await this.ProductRepository.find();
-        
-        if(!product) {
-            return 'No hay productos para mostrar.';
-        };
+        let products = await this.ProductRepository.find();
 
-        return product;
+        validateProductExist(products);
+
+        return products;
     };
 
     create(body: any) {
@@ -33,9 +32,7 @@ export class ProductsService {
     };
 
     async findOne(id: number) {
-        if(isNaN(id)) {
-            return 'Se produjo un error al buscar el producto';
-        };
+        validateFormatId(id);
 
         let product = await this.ProductRepository.findOne(id);
 
@@ -47,9 +44,7 @@ export class ProductsService {
     };
 
     async update(id: number, body: any) {
-        if(isNaN(id)) {
-            return 'Se produjo un error al buscar el producto';
-        };
+        validateIdUpdate(id);
 
         if(body.name === '') {
             return 'El nombre es requerido.';
@@ -168,4 +163,22 @@ function validateBody(body: any) {
         throw new Error('El talle no es soportado.');
     };
 
+};
+
+function validateProductExist(products: Product[]) {
+    if(!products) {
+        return 'No hay productos para mostrar.';
+    };
+};
+
+function validateFormatId(id: number) {
+    if(isNaN(id)) {
+        return 'Se produjo un error al buscar el producto';
+    };
+};
+
+function validateIdUpdate(id: number) {
+    if(isNaN(id)) {
+        return 'Se produjo un error al buscar el producto';
+    };
 };
