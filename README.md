@@ -1,90 +1,12 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
-
-```bash
-$ npm install
-```
-
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
-
-# Api rest - PPS 
-## El presente trabajo se realizó con el fin de cumplir con la Práctica profesional supervisada de la carrera Técnico universitario en programación de la UTN San francisco.
+# Api rest - Practica profesional supervisada
+### El presente trabajo se realizó con el fin de cumplir con la Práctica profesional supervisada de la carrera Técnico universitario en programación de la UTN San francisco.
 
 Estudiante: Cravero Ayrton
 
 Doc supervisor: Ferrero Nicolás
 
-## Iniciar proyecto
-El proyecto esta realizadon con nodeJs y nestJs. 
-
-Para correr el proyecto se debe de ejecutar el comando: `npm run dev` para ejecutarlo con nodemon, en caso de realizar cambios y querer verlos en el momento.
-
-Ejecute `npm run start` para iniciar sin nodemon, si usa este comadno debera de reiniciar el servido para visualizar los cambios.
+## ¿En que consiste el proyecto?
+El proyecto es una Api rest con la funciónalidad de un CRUD de productos y usuarios, para la creacion del mismo se plantio un MVP(Minimum viable product).
 
 ## Entorno del proyecto
 Para el desarrollo del proyecto se utilizo:
@@ -95,3 +17,29 @@ Para el desarrollo del proyecto se utilizo:
 - TypeScript
 - Swagger
 - Docker
+- Postgres
+
+## Iniciar proyecto
+  Pasos para la correcta instalacion y funcionamiento de la app:
+
+  1- Clonar el repo: 
+
+    - Ssh: git@github.com:ayrtoncravero/ps-api-rest.git
+    
+    - Https: https://github.com/ayrtoncravero/ps-api-rest.git 
+
+  2- Instalacion de las dependencias: En el root del proyecto correr el comando: `npm install`, este comando leerá e instalara las dependencias en el 'package.json'.
+
+  3- Construir la imagen de docker: Para iniciar la imagen que contiene nuestra DB, en el root del proyecto correr el comando: `docker-compose up -d database`.
+
+  4- Para iniciar el proyecto: Tenemos dos opciones:
+  - `npm run dev`: La más recomendada, ejecuta el servidor utilizando nodemon.
+  - `npm run start`: Ejecuta el servidor, pero al realizar cambios se debe reiniciar el servidor.
+
+  5- Para acceder a la base de datos postgres en el contenedor:
+    - Comprobar que este corriendo el container: `docker ps`.
+    - Para acceder al contenedor: `docker-compose exec database bash`.
+    - Para acceder al servicio de postgres: `psql -h localhost -d nameDatabase -U userDatabase`, las credenciales se encuentran en el archivo 'docker-compose'.
+
+### Documentacion de endpoints
+  Se agrego la documentación utilizando Swagger, para acceder a ella se debe de iniciar el proyecto, corriendo el comando: `npm run dev` o `npm run start`, luego acceder en el navegador a la siguiente URL: http://localhost:3000/api/documentation/#/. En la misma pagina se va a encontrar detallado loda la informacion del consumo de la APi y la descripción de las entidades.
