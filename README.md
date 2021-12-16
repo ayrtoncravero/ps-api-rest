@@ -71,3 +71,27 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+# Api rest - PPS 
+## El presente trabajo se realizó con el fin de cumplir con la Práctica profesional supervisada de la carrera Técnico universitario en programación de la UTN San francisco.
+
+Estudiante: Cravero Ayrton
+
+Doc supervisor: Ferrero Nicolás
+
+## Iniciar proyecto
+El proyecto esta realizadon con nodeJs y nestJs. 
+
+Para correr el proyecto se debe de ejecutar el comando: `npm run dev` para ejecutarlo con nodemon, en caso de realizar cambios y querer verlos en el momento.
+
+Ejecute `npm run start` para iniciar sin nodemon, si usa este comadno debera de reiniciar el servido para visualizar los cambios.
+
+## Entorno del proyecto
+Para el desarrollo del proyecto se utilizo:
+
+- Nodejs
+- NestJs
+- Nodemon
+- TypeScript
+- Swagger
+- Docker
