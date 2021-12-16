@@ -25,7 +25,7 @@ export class User {
         description: 'Representa el apellido del usuario.',
         type: String,
     })
-    surName: string;
+    surname: string;
 
     @Column()
     @ApiProperty({
