@@ -34,7 +34,7 @@ export class UsersService {
 
         this.UserRepository.save(user);
 
-        return `Se creo con exito el usuario: ${CreateUserDto.name} ${CreateUserDto.surName}.`;
+        return `Se creo con exito el usuario: ${CreateUserDto.name} ${CreateUserDto.surname}.`;
     };
 
     async findOne(id: number) {
@@ -60,7 +60,7 @@ export class UsersService {
             return 'El nombre es requerido.';
         };
 
-        if(body.surName === '') {
+        if(body.surname === '') {
             return 'El apellido es requerido.';
         };
 
@@ -84,7 +84,7 @@ export class UsersService {
 
         this.UserRepository.save(user);
 
-        return `Se actualizo con exito al usuario: ${user.name} ${user.surName}.`;
+        return `Se actualizo con exito al usuario: ${user.name} ${user.surname}.`;
     };
 
     async delete(id: number) {
@@ -109,7 +109,7 @@ function validateBody(body: any) {
         throw new Error('El nombre es requerido.');
     };
 
-    if(body.surName === '') {
+    if(body.surname === '') {
         throw new Error('El apellido es requerido.');
     };
 

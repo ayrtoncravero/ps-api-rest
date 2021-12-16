@@ -22,7 +22,6 @@ import {
 import { User } from '../entities/user.entity';
 import { CreateUserDto } from '../dtos/create.user.dto';
 import { UpdateUserDto } from '../dtos/update.user.dto';
-import { Readable } from 'stream';
 
 @ApiTags('users')
 @Controller('api/users')

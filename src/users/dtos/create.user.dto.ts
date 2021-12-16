@@ -13,7 +13,7 @@ export class CreateUserDto {
         description: 'Representa el apellido del usuario.',
         type: String,
     })
-    surName: string;
+    surname: string;
 
     @ApiProperty({
         example: 'pepito@example.com',
