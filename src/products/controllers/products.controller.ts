@@ -6,8 +6,8 @@ import {
     HttpCode, 
     Param, 
     ParseIntPipe, 
-    Post, 
-    Put, 
+    Patch, 
+    Post,  
     UsePipes,
     ValidationPipe
 } from '@nestjs/common';
@@ -85,7 +85,7 @@ export class ProductsController {
         return this.ProductService.findOne(FindOneDto);
     };
 
-    @Put(':id')
+    @Patch(':id')
     @UsePipes(ValidationPipe)
     @HttpCode(200)
     @ApiOperation({
