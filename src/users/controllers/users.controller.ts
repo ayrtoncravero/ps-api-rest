@@ -4,12 +4,12 @@ import {
     Get, 
     Post, 
     Param, 
-    Put, 
     Delete, 
     HttpCode,
     UsePipes,
     ValidationPipe,
     ParseIntPipe,
+    Patch,
 } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 import { 
@@ -84,7 +84,7 @@ export class UsersController {
         return this.UserService.findOne(FindOneDto);
     };
 
-    @Put(':id')
+    @Patch(':id')
     @UsePipes(ValidationPipe)
     @HttpCode(200)
     @ApiOperation({
