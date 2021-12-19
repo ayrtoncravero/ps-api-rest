@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger"; 
+import { IsInt, IsString } from "class-validator";
 
 export class CreateProductDto {
     @ApiProperty({
@@ -6,6 +7,7 @@ export class CreateProductDto {
         description: 'Representa el nombre del producto.',
         type: String,
     })
+    @IsString()
     name: string;
 
     @ApiProperty({
@@ -13,6 +15,7 @@ export class CreateProductDto {
         description: 'Representa el precio del producto.',
         type: Number,
     })
+    @IsInt()
     price: number;
 
     @ApiProperty({
@@ -20,6 +23,7 @@ export class CreateProductDto {
         description: 'Representa la imagen del producto',
         type: String,
     })
+    @IsString()
     image: string;
 
     @ApiProperty({
@@ -27,5 +31,6 @@ export class CreateProductDto {
         description: 'Representa el talle del producto.',
         type: String,
     })
+    @IsString()
     size: string;
 }
