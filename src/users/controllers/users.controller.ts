@@ -40,6 +40,10 @@ export class UsersController {
         description: 'Una lista con todos los usuarios.',
         type: User,
     })
+    @ApiBadRequestResponse({
+        status: 400,
+        description: 'No se encontraron usuarios.',
+    })
     getAll() {
         return this.UserService.findAll();
     }
@@ -54,6 +58,7 @@ export class UsersController {
         description: 'El usuario fue creado correctamente.',
     })
     @ApiBadRequestResponse({
+        status: 400,
         description: 'El usuario no pudo ser creado.',
     })
     @ApiCreatedResponse({
@@ -68,7 +73,6 @@ export class UsersController {
     };
 
     @Get(':id')
-    @HttpCode(200)
     @ApiOperation({
         summary: 'Obtiene un usuario por id.',
     })
@@ -78,6 +82,7 @@ export class UsersController {
         type: User,
     })
     @ApiBadRequestResponse({
+        status: 400,
         description: 'El usuario no pudo encontrarse.'
     })
     getOne(@Param('id', ParseIntPipe) FindOneDto: number) {
@@ -86,7 +91,6 @@ export class UsersController {
 
     @Patch(':id')
     @UsePipes(ValidationPipe)
-    @HttpCode(200)
     @ApiOperation({
         summary: 'Actualizacion de usuario.'
     })
@@ -95,6 +99,7 @@ export class UsersController {
         description: 'El usuario se actualizo correctamente.',
     })
     @ApiBadRequestResponse({
+        status: 400,
         description: 'No se pudo encontrar el producto.',
     })
     @ApiBody({
@@ -106,7 +111,6 @@ export class UsersController {
 
     @Delete(':id')
     @UsePipes(ValidationPipe)
-    @HttpCode(200)
     @ApiOperation({
         summary: 'Eliminacion de un usuario.'
     })
@@ -115,6 +119,7 @@ export class UsersController {
         description: 'El usuario fue eliminado con exito.',
     })
     @ApiBadRequestResponse({
+        status: 400,
         description: 'El usuario no pudo eliminarse.',
     })
     async delete(@Param('id', ParseIntPipe) DeleteIdUserDto: number) {
