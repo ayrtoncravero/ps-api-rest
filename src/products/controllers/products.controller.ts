@@ -1,12 +1,15 @@
 import { 
-Body, 
+    Body, 
     Controller, 
     Delete, 
     Get, 
     HttpCode, 
     Param, 
+    ParseIntPipe, 
     Post, 
-    Put 
+    Put, 
+    UsePipes,
+    ValidationPipe
 } from '@nestjs/common';
 import { ProductsService } from '../services/products.service';
 import { 
@@ -38,14 +41,11 @@ export class ProductsController {
         type: Product,
     })
     getAll() {
-        try {
-            return this.ProductService.findAll();
-        } catch(error) {
-            return `${error}`;
-        };
+        return this.ProductService.findAll();
     };
 
     @Post()
+    @UsePipes(ValidationPipe)
     @HttpCode(201)
     @ApiOperation({
         summary: 'Crea un producto.',
@@ -64,12 +64,8 @@ export class ProductsController {
     @ApiBody({
         type: Product,
     })
-    create(@Body() CreateProductDto: CreateProductDto) {
-        try {
-            return this.ProductService.create(CreateProductDto);
-        } catch(error) {
-            return `${error}`;
-        };
+    create(@Body(new ValidationPipe()) CreateProductDto: CreateProductDto) {
+        return this.ProductService.create(CreateProductDto);
     }
 
     @Get(':id')
@@ -85,15 +81,12 @@ export class ProductsController {
     @ApiBadRequestResponse({
         description: 'El producto no pudo encontrarse.',
     })
-    getOne(@Param('id') FindOneDto: number) {
-        try {
-            return this.ProductService.findOne(FindOneDto);
-        } catch(error) {
-            return `${error}`;
-        };
+    getOne(@Param('id', ParseIntPipe) FindOneDto: number) {
+        return this.ProductService.findOne(FindOneDto);
     };
 
     @Put(':id')
+    @UsePipes(ValidationPipe)
     @HttpCode(200)
     @ApiOperation({
         summary: 'Actualizacion de produto.',
@@ -108,15 +101,12 @@ export class ProductsController {
     @ApiBody({
         type: Product,
     })
-    update(@Param('id') UpdateIdProductDto: number, @Body() UpdateProductDto: UpdateProductDto) {
-        try {
-            return this.ProductService.update(UpdateIdProductDto, UpdateProductDto);
-        } catch(error) {
-            return `${error}`;
-        };
+    update(@Param('id', ParseIntPipe) UpdateIdProductDto: number, @Body() UpdateProductDto: UpdateProductDto) {
+        return this.ProductService.update(UpdateIdProductDto, UpdateProductDto);
     }
 
     @Delete(':id')
+    @UsePipes(ValidationPipe)
     @HttpCode(200)
     @ApiOperation({
         summary: 'Eliminacion de un producto.'
@@ -128,11 +118,7 @@ export class ProductsController {
     @ApiBadRequestResponse({
         description: 'El producto no pudo eliminarse.'
     })
-    delete(@Param('id') DeleteProductDto: number) {
-        try {
-            return this.ProductService.delete(DeleteProductDto);
-        } catch(error) {
-            return `${error}`;
-        };
+    delete(@Param('id', ParseIntPipe) DeleteProductDto: number) {
+        return this.ProductService.delete(DeleteProductDto);
     };
 }

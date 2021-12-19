@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { IsInt } from "class-validator";
 
 export class UpdateIdProductDto {
     @ApiProperty({
@@ -6,5 +7,6 @@ export class UpdateIdProductDto {
         description: 'Identificador unico del producto.',
         type: Number,
     })
+    @IsInt()
     id: number;
 }

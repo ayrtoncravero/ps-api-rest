@@ -1,5 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { ApiProperty } from '@nestjs/swagger';
+import { IsEmail } from 'class-validator';
 
 @Entity()
 export class User {
@@ -33,5 +34,6 @@ export class User {
         description: 'Representa el correo electronico del usuario.',
         type: String,
     })
+    @IsEmail()
     email: string;
 }
