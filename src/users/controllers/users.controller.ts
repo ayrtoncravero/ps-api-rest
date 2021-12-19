@@ -7,8 +7,9 @@ import {
     Put, 
     Delete, 
     HttpCode,
-    Res,
-    Response,
+    UsePipes,
+    ValidationPipe,
+    ParseIntPipe,
 } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 import { 
@@ -40,15 +41,11 @@ export class UsersController {
         type: User,
     })
     getAll() {
-        try {
-            return this.UserService.findAll();
-        } catch(error) {
-            return `${error}`;
-        };
+        return this.UserService.findAll();
     }
 
     @Post() 
-    @HttpCode(201)
+    @UsePipes(ValidationPipe)
     @ApiOperation({
         summary: 'Crear un usuario.',
     })
@@ -66,12 +63,8 @@ export class UsersController {
     @ApiBody({
         type: User,
     })
-    create(@Body() CreateUserDto: CreateUserDto, @Res({ passthrough: true }) response: Response) {
-        try {
-            return this.UserService.create(CreateUserDto);    
-        } catch(error) {
-            return `${error}`;
-        };
+    create(@Body(new ValidationPipe()) CreateUserDto: CreateUserDto) {
+        return this.UserService.create(CreateUserDto);
     };
 
     @Get(':id')
@@ -87,15 +80,12 @@ export class UsersController {
     @ApiBadRequestResponse({
         description: 'El usuario no pudo encontrarse.'
     })
-    getOne(@Param('id') FindOneDto: number) {
-        try {
-            return this.UserService.findOne(FindOneDto);
-        } catch(error) {
-            return `${error}`;
-        };
+    getOne(@Param('id', ParseIntPipe) FindOneDto: number) {
+        return this.UserService.findOne(FindOneDto);
     };
 
     @Put(':id')
+    @UsePipes(ValidationPipe)
     @HttpCode(200)
     @ApiOperation({
         summary: 'Actualizacion de usuario.'
@@ -111,11 +101,7 @@ export class UsersController {
         type: User,
     })
     update(@Param('id') UpdateIdUserDto: number, @Body() UpdateUserDto: UpdateUserDto) {
-        try {
-            return this.UserService.update(UpdateIdUserDto, UpdateUserDto);
-        } catch(error) {
-            return `${error}`;
-        }
+        return this.UserService.update(UpdateIdUserDto, UpdateUserDto);
     };
 
     @Delete(':id')
@@ -131,10 +117,6 @@ export class UsersController {
         description: 'El usuario no pudo eliminarse.',
     })
     async delete(@Param('id') DeleteIdUserDto: number) {
-        try {
-            return await this.UserService.delete(DeleteIdUserDto);
-        } catch(error) {
-            return `${error}`;
-        };
+        return await this.UserService.delete(DeleteIdUserDto);
     };
 }
