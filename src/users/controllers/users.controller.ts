@@ -100,7 +100,7 @@ export class UsersController {
     @ApiBody({
         type: User,
     })
-    update(@Param('id') UpdateIdUserDto: number, @Body() UpdateUserDto: UpdateUserDto) {
+    update(@Param('id', ParseIntPipe) UpdateIdUserDto: number, @Body() UpdateUserDto: UpdateUserDto) {
         return this.UserService.update(UpdateIdUserDto, UpdateUserDto);
     };
 
