@@ -115,7 +115,7 @@ export class UsersController {
         summary: 'Eliminacion de un usuario.'
     })
     @ApiResponse({
-        status:200,
+        status:204,
         description: 'El usuario fue eliminado con exito.',
     })
     @ApiBadRequestResponse({
