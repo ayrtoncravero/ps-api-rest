@@ -105,6 +105,7 @@ export class UsersController {
     };
 
     @Delete(':id')
+    @UsePipes(ValidationPipe)
     @HttpCode(200)
     @ApiOperation({
         summary: 'Eliminacion de un usuario.'
@@ -116,7 +117,7 @@ export class UsersController {
     @ApiBadRequestResponse({
         description: 'El usuario no pudo eliminarse.',
     })
-    async delete(@Param('id') DeleteIdUserDto: number) {
+    async delete(@Param('id', ParseIntPipe) DeleteIdUserDto: number) {
         return await this.UserService.delete(DeleteIdUserDto);
     };
 }
