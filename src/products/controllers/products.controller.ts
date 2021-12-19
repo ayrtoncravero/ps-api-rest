@@ -41,6 +41,7 @@ export class ProductsController {
         type: Product,
     })
     @ApiBadRequestResponse({
+        status: 400,
         description: 'No se pudieron listar los productos.'
     })
     getAll() {
@@ -49,7 +50,6 @@ export class ProductsController {
 
     @Post()
     @UsePipes(ValidationPipe)
-    @HttpCode(201)
     @ApiOperation({
         summary: 'Crea un producto.',
     })
@@ -58,6 +58,7 @@ export class ProductsController {
         description: 'El producto fue creado correctamente.'
     })
     @ApiBadRequestResponse({
+        status: 400,
         description: 'El producto no pudo ser creado.'
     })
     @ApiCreatedResponse({
@@ -73,7 +74,6 @@ export class ProductsController {
 
     @Get(':id')
     @UsePipes(ValidationPipe)
-    @HttpCode(200)
     @ApiOperation({
         summary: 'Obtiene un producto por id.',
     })
@@ -83,6 +83,7 @@ export class ProductsController {
         type: Product,
     })
     @ApiBadRequestResponse({
+        status: 400,
         description: 'El producto no pudo encontrarse.',
     })
     getOne(@Param('id', ParseIntPipe) FindOneDto: number) {
@@ -91,7 +92,6 @@ export class ProductsController {
 
     @Patch(':id')
     @UsePipes(ValidationPipe)
-    @HttpCode(200)
     @ApiOperation({
         summary: 'Actualizacion de produto.',
     })
@@ -100,6 +100,7 @@ export class ProductsController {
         description: 'El producto se actualizo correctamente.',
     })
     @ApiBadRequestResponse({
+        status: 400,
         description: 'No se pudo editar el producto',
     })
     @ApiBody({
@@ -111,12 +112,11 @@ export class ProductsController {
 
     @Delete(':id')
     @UsePipes(ValidationPipe)
-    @HttpCode(200)
     @ApiOperation({
         summary: 'Eliminacion de un producto.'
     })
     @ApiResponse({
-        status: 200,
+        status: 204,
         description: 'El producto fue eliminado con exito.'
     })
     @ApiBadRequestResponse({
