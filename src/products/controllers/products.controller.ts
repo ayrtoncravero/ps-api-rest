@@ -40,6 +40,9 @@ export class ProductsController {
         description: 'Una lista con todos los usuarios.',
         type: Product,
     })
+    @ApiBadRequestResponse({
+        description: 'No se pudieron listar los productos.'
+    })
     getAll() {
         return this.ProductService.findAll();
     };
@@ -69,6 +72,7 @@ export class ProductsController {
     }
 
     @Get(':id')
+    @UsePipes(ValidationPipe)
     @HttpCode(200)
     @ApiOperation({
         summary: 'Obtiene un producto por id.',
