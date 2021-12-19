@@ -1,10 +1,10 @@
-import { Body, HttpCode, HttpStatus, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { Product } from '../entities/product.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { validImages } from '../enums/images.enum';
 import { size } from '../enums/size.enum';
-import { HttpException } from '@nestjs/common';
+import { CreateProductDto } from '../dtos/create.product.dto';
 
 @Injectable()
 export class ProductsService {
@@ -28,114 +28,71 @@ export class ProductsService {
 
         this.ProductRepository.save(product);
 
-        return `Se creo con exito el producto: ${body.name}.`;
+        return {
+            message: 'Se creo con exito el producto.'
+        };
     };
 
-    async findOne(id: number) {
-        validateFormatId(id);
-
-        let product = await this.ProductRepository.findOne(id);
+    async findOne(FindOneDto: number) {
+        let product = await this.ProductRepository.findOne(FindOneDto);
 
         if(!product) {
-            return 'No existe el producto.';
+            throw new NotFoundException('No existe el producto.');
         };
 
         return product;
     };
 
     async update(id: number, body: any) {
-        validateIdUpdate(id);
-
-        if(body.name === '') {
-            return 'El nombre es requerido.';
-        };
-
-        if(body.price === '') {
-            return 'El precio es requerido.';
-        };
-        if(isNaN(body.price)) {
-            return 'El precio debe de ser un número.';
-        };
-        if(body.price <= 0) {
-            return 'El precio minimo es $1.';
-        };
-
-        if(body.image === '') {
-            return 'La imagen es requerida.';
-        };
-    
-        let route = body.image;
-    
-        var extension = route.substring(route.lastIndexOf('.') + 1).toLowerCase();
-    
-        if(
-            extension !== validImages.JPG && 
-            extension !== validImages.PNG && 
-            extension !== validImages.TIFF && 
-            extension !== validImages.BMP
-        ) {
-            return 'El formato de imagen no es soportado.';
-        };
-        
-        if(body.size === '') {
-            return 'El talle es requerido.';
-        };
-        if(body.size !== size.S && 
-            body.size !== size.M && 
-            body.size !== size.L && 
-            body.size !== size.XL && 
-            body.size !== size.XXL
-        ) {
-            return 'El talle no es soportado.';
-        };
+        validateBody(body);
 
         const product = await this.ProductRepository.findOne(id);
         
         if(!product) {
-            return 'El producto no existe.';
+            throw new NotFoundException('El producto no existe.');
         };
 
         this.ProductRepository.merge(product, body);
 
         this.ProductRepository.save(product);
 
-        return `Se edito con exito el producto: ${body.name}.`;
+        return {
+            message: 'Se edito con exito el producto.'
+        };
     };
 
     async delete(id: number) {
-        if(isNaN(id)) {
-            return 'Se produjo un error al buscar el producto';
-        };
-
         let product = await this.ProductRepository.findOne(id);
 
         if(!product) {
-            return 'No existe el producto.';
+            throw new NotFoundException('No existe el producto.');
         };
 
         await this.ProductRepository.delete(id)
         
-        return `Se elimino con exito el producto.`;
+        return {
+            message: 'Se elimino con exito el producto.'
+        };
     };
 }
 
 function validateBody(body: any) {
     if(body.name === '') {
-        throw new Error('El nombre es requerido.');
+        throw new BadRequestException('El nombre es requerido.');
     };
 
     if(body.price === '') {
-        throw new Error('El precio es requerido.');
+        throw new BadRequestException('El precio es requerido.');
     };
     if(body.price <= 0) {
-        throw new Error('El precio minimo es $1.');
+        throw new BadRequestException('El precio minimo es $1.');
     };
     if(isNaN(body.price)) {
-        throw new Error('El precio debe de ser un numero.');
+        throw new BadRequestException('El precio debe de ser un numero.');
     };
 
     if(body.image === '') {
-        throw new Error('La imagen es requerida.');
+        throw new BadRequestException('La imagen es requerida.');
     };
 
     let route = body.image;
@@ -148,11 +105,11 @@ function validateBody(body: any) {
         extension !== validImages.TIFF && 
         extension !== validImages.BMP
     ) {
-        throw new Error('El formato de imagen no es soportado.');
+        throw new BadRequestException('El formato de imagen no es soportado.');
     };
     
     if(body.size === '') {
-        throw new Error('El talle es requerido.');
+        throw new BadRequestException('El talle es requerido.');
     };
     if(body.size !== size.S && 
         body.size !== size.M && 
@@ -160,25 +117,12 @@ function validateBody(body: any) {
         body.size !== size.XL && 
         body.size !== size.XXL
     ) {
-        throw new Error('El talle no es soportado.');
+        throw new BadRequestException('El talle no es soportado.');
     };
-
 };
 
 function validateProductExist(products: Product[]) {
     if(!products) {
-        return 'No hay productos para mostrar.';
-    };
-};
-
-function validateFormatId(id: number) {
-    if(isNaN(id)) {
-        return 'Se produjo un error al buscar el producto';
-    };
-};
-
-function validateIdUpdate(id: number) {
-    if(isNaN(id)) {
-        return 'Se produjo un error al buscar el producto';
+        throw new NotFoundException('No hay productos para mostrar.');
     };
 };
