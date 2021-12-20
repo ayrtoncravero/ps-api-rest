@@ -9,6 +9,7 @@ import {
     ValidationPipe,
     ParseIntPipe,
     Patch,
+    HttpCode,
 } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 import { 
@@ -31,6 +32,7 @@ export class UsersController {
     ) {};
 
     @Get()
+    @HttpCode(200)
     @ApiOperation({
         summary: 'Obtiene todos los usuarios.'
     })
@@ -47,7 +49,8 @@ export class UsersController {
         return this.UserService.findAll();
     }
 
-    @Post() 
+    @Post()
+    @HttpCode(201) 
     @UsePipes(ValidationPipe)
     @ApiOperation({
         summary: 'Crear un usuario.',
@@ -72,6 +75,7 @@ export class UsersController {
     };
 
     @Get(':id')
+    @HttpCode(200)
     @ApiOperation({
         summary: 'Obtiene un usuario por id.',
     })
@@ -89,6 +93,7 @@ export class UsersController {
     };
 
     @Patch(':id')
+    @HttpCode(200)
     @UsePipes(ValidationPipe)
     @ApiOperation({
         summary: 'Actualizacion de usuario.'
@@ -109,6 +114,7 @@ export class UsersController {
     };
 
     @Delete(':id')
+    @HttpCode(203)
     @UsePipes(ValidationPipe)
     @ApiOperation({
         summary: 'Eliminacion de un usuario.'
