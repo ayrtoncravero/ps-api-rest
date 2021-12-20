@@ -3,6 +3,7 @@ import {
     Controller, 
     Delete, 
     Get,
+    HttpCode,
     Param, 
     ParseIntPipe, 
     Patch, 
@@ -31,6 +32,7 @@ export class ProductsController {
     ) {};
 
     @Get()
+    @HttpCode(200)
     @ApiOperation({
         summary: 'Obtiene todos los productos.'
     })
@@ -48,6 +50,7 @@ export class ProductsController {
     };
 
     @Post()
+    @HttpCode(201)
     @UsePipes(ValidationPipe)
     @ApiOperation({
         summary: 'Crea un producto.',
@@ -72,6 +75,7 @@ export class ProductsController {
     }
 
     @Get(':id')
+    @HttpCode(200)
     @UsePipes(ValidationPipe)
     @ApiOperation({
         summary: 'Obtiene un producto por id.',
@@ -90,6 +94,7 @@ export class ProductsController {
     };
 
     @Patch(':id')
+    @HttpCode(200)
     @UsePipes(ValidationPipe)
     @ApiOperation({
         summary: 'Actualizacion de produto.',
@@ -110,6 +115,7 @@ export class ProductsController {
     }
 
     @Delete(':id')
+    @HttpCode(203)
     @UsePipes(ValidationPipe)
     @ApiOperation({
         summary: 'Eliminacion de un producto.'
