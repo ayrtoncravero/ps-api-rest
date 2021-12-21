@@ -43,7 +43,7 @@ export class UsersController {
     })
     @ApiBadRequestResponse({
         status: 400,
-        description: 'No se encontraron usuarios.',
+        description: 'No se pudo listar a los usuarios.',
     })
     getAll() {
         return this.UserService.findAll();
