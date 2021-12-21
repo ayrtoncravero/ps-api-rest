@@ -118,8 +118,18 @@ export class UsersController {
         status: 400,
         description: 'No se pudo encontrar el producto.',
     })
+    @ApiBadRequestResponse({
+        status: 400,
+        description: 'No se pudo editar el producto',
+    })
     @ApiBody({
         type: User,
+    })
+    @ApiParam({
+        name: 'id',
+        example: 1,
+        type: Number,
+        description: 'Representa un identificador unico del producto.',
     })
     update(@Param('id', ParseIntPipe) UpdateIdUserDto: number, @Body() UpdateUserDto: UpdateUserDto) {
         return this.UserService.update(UpdateIdUserDto, UpdateUserDto);
