@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { 
+    BadRequestException, 
+    Injectable, 
+    NotFoundException 
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
 import { Repository } from 'typeorm';
@@ -65,7 +69,7 @@ export class UsersService {
         let user = await this.UserRepository.findOne(id);
 
         if(!user) {
-            throw new NotFoundException('No existe el El usuario no existe.');
+            throw new NotFoundException('No existe el usuario.');
         };
 
         await this.UserRepository.delete(id);

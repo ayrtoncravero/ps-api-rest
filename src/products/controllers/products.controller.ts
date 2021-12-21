@@ -19,6 +19,8 @@ import {
     ApiOperation,
     ApiBadRequestResponse,
     ApiBody,
+    ApiParam,
+    ApiNotFoundResponse,
 } from '@nestjs/swagger';
 import { Product } from '../entities/product.entity';
 import { CreateProductDto } from 'src/products/dtos/create.product.dto';
@@ -43,7 +45,7 @@ export class ProductsController {
     })
     @ApiBadRequestResponse({
         status: 400,
-        description: 'No se pudieron listar los productos.'
+        description: 'Se produjo un error al buscar el producto.'
     })
     getAll() {
         return this.ProductService.findAll();
@@ -61,7 +63,7 @@ export class ProductsController {
     })
     @ApiBadRequestResponse({
         status: 400,
-        description: 'El producto no pudo ser creado.'
+        description: 'Se produjo un error al buscar el producto.'
     })
     @ApiCreatedResponse({
         description: 'El producto fue creado correctamente.',
@@ -85,9 +87,19 @@ export class ProductsController {
         description: 'Producto encontrado.',
         type: Product,
     })
+    @ApiParam({
+        name: 'id',
+        example: 1,
+        type: Number,
+        description: 'Representa un identificador unico del producto.',
+    })
     @ApiBadRequestResponse({
         status: 400,
-        description: 'El producto no pudo encontrarse.',
+        description: 'Se produjo un error al buscar el producto.',
+    })
+    @ApiNotFoundResponse({
+        status: 404,
+        description: 'Producto no encontrado.'
     })
     getOne(@Param('id', ParseIntPipe) FindOneDto: number) {
         return this.ProductService.findOne(FindOneDto);
@@ -105,27 +117,51 @@ export class ProductsController {
     })
     @ApiBadRequestResponse({
         status: 400,
-        description: 'No se pudo editar el producto',
+        description: 'Se produjo un error al buscar el producto',
+    })
+    @ApiNotFoundResponse({
+        status: 404,
+        description: 'Producto no encontrado.'
     })
     @ApiBody({
         type: Product,
+    })
+    @ApiParam({
+        name: 'id',
+        example: 1,
+        type: Number,
+        description: 'Representa un identificador unico del producto.',
     })
     update(@Param('id', ParseIntPipe) UpdateIdProductDto: number, @Body() UpdateProductDto: UpdateProductDto) {
         return this.ProductService.update(UpdateIdProductDto, UpdateProductDto);
     }
 
     @Delete(':id')
-    @HttpCode(203)
+    @HttpCode(200)
     @UsePipes(ValidationPipe)
     @ApiOperation({
         summary: 'Eliminacion de un producto.'
     })
     @ApiResponse({
-        status: 204,
+        status: 200,
         description: 'El producto fue eliminado con exito.'
     })
     @ApiBadRequestResponse({
         description: 'El producto no pudo eliminarse.'
+    })
+    @ApiBadRequestResponse({
+        status: 400,
+        description: 'Se produjo un error al buscar el producto.',
+    })
+    @ApiNotFoundResponse({
+        status: 404,
+        description: 'Producto no encontrado.',
+    })
+    @ApiParam({
+        name: 'id',
+        example: 1,
+        type: Number,
+        description: 'Representa un identificador unico del producto.',
     })
     delete(@Param('id', ParseIntPipe) DeleteProductDto: number) {
         return this.ProductService.delete(DeleteProductDto);

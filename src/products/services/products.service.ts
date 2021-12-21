@@ -4,7 +4,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { validImages } from '../enums/images.enum';
 import { size } from '../enums/size.enum';
-import { CreateProductDto } from '../dtos/create.product.dto';
 
 @Injectable()
 export class ProductsService {
