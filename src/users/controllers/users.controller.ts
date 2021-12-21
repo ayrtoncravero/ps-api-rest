@@ -118,7 +118,7 @@ export class UsersController {
         status: 400,
         description: 'No se pudo encontrar el producto.',
     })
-    @ApiBadRequestResponse({
+    @ApiNotFoundResponse({
         status: 400,
         description: 'No se pudo editar el producto',
     })
