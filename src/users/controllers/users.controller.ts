@@ -85,7 +85,7 @@ export class UsersController {
         name: 'id',
         example: 1,
         type: Number,
-        description: 'Representa un identificador unico del producto.',
+        description: 'Representa un identificador unico del usuario.',
     })
     @ApiResponse({
         status: 200,
@@ -116,11 +116,11 @@ export class UsersController {
     })
     @ApiBadRequestResponse({
         status: 400,
-        description: 'No se pudo encontrar el producto.',
+        description: 'No se pudo encontrar el usuario.',
     })
     @ApiNotFoundResponse({
         status: 400,
-        description: 'No se pudo editar el producto',
+        description: 'No se pudo editar el usuario',
     })
     @ApiBody({
         type: User,
@@ -129,25 +129,35 @@ export class UsersController {
         name: 'id',
         example: 1,
         type: Number,
-        description: 'Representa un identificador unico del producto.',
+        description: 'Representa un identificador unico del usuario.',
     })
     update(@Param('id', ParseIntPipe) UpdateIdUserDto: number, @Body() UpdateUserDto: UpdateUserDto) {
         return this.UserService.update(UpdateIdUserDto, UpdateUserDto);
     };
 
     @Delete(':id')
-    @HttpCode(203)
+    @HttpCode(200)
     @UsePipes(ValidationPipe)
     @ApiOperation({
         summary: 'Eliminacion de un usuario.'
     })
     @ApiResponse({
-        status:204,
+        status:200,
         description: 'El usuario fue eliminado con exito.',
     })
     @ApiBadRequestResponse({
         status: 400,
         description: 'El usuario no pudo eliminarse.',
+    })
+    @ApiNotFoundResponse({
+        status: 404,
+        description: 'Usuario no encontrado.',
+    })
+    @ApiParam({
+        name: 'id',
+        example: 1,
+        type: Number,
+        description: 'Representa un identificador unico del usuario.',
     })
     async delete(@Param('id', ParseIntPipe) DeleteIdUserDto: number) {
         return await this.UserService.delete(DeleteIdUserDto);
