@@ -19,6 +19,7 @@ import {
     ApiOperation,
     ApiBadRequestResponse,
     ApiBody,
+    ApiParam,
 } from '@nestjs/swagger';
 import { Product } from '../entities/product.entity';
 import { CreateProductDto } from 'src/products/dtos/create.product.dto';
@@ -84,6 +85,12 @@ export class ProductsController {
         status: 200,
         description: 'Producto encontrado.',
         type: Product,
+    })
+    @ApiParam({
+        name: 'id',
+        example: 1,
+        type: Number,
+        description: 'Representa un identificador unico del producto',
     })
     @ApiBadRequestResponse({
         status: 400,
