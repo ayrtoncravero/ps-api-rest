@@ -94,7 +94,11 @@ export class ProductsController {
     })
     @ApiBadRequestResponse({
         status: 400,
-        description: 'El producto no pudo encontrarse.',
+        description: 'Se produjo un error al buscar el producto.',
+    })
+    @ApiBadRequestResponse({
+        status: 404,
+        description: 'Producto no encontrado.'
     })
     getOne(@Param('id', ParseIntPipe) FindOneDto: number) {
         return this.ProductService.findOne(FindOneDto);
