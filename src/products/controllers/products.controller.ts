@@ -117,7 +117,7 @@ export class ProductsController {
     })
     @ApiBadRequestResponse({
         status: 400,
-        description: 'No se pudo editar el producto',
+        description: 'Se produjo un error al buscar el producto',
     })
     @ApiNotFoundResponse({
         status: 404,
@@ -151,11 +151,11 @@ export class ProductsController {
     })
     @ApiBadRequestResponse({
         status: 400,
-        description: 'No se pudo editar el producto',
+        description: 'Se produjo un error al buscar el producto',
     })
     @ApiNotFoundResponse({
         status: 404,
-        description: 'Producto no encontrado',
+        description: 'Producto no encontrado.',
     })
     @ApiParam({
         name: 'id',
