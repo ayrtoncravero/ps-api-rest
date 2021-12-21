@@ -86,7 +86,7 @@ export class UsersController {
     })
     @ApiBadRequestResponse({
         status: 400,
-        description: 'El usuario no pudo encontrarse.'
+        description: 'Se produjo un error al buscar el usuario.'
     })
     getOne(@Param('id', ParseIntPipe) FindOneDto: number) {
         return this.UserService.findOne(FindOneDto);
