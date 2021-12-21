@@ -38,7 +38,7 @@ export class ProductsController {
     })
     @ApiResponse({
         status: 200,
-        description: 'Una lista con todos los usuarios.',
+        description: 'Una lista con todos los productos.',
         type: Product,
     })
     @ApiBadRequestResponse({
