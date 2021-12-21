@@ -20,6 +20,7 @@ import {
     ApiBadRequestResponse,
     ApiBody,
     ApiParam,
+    ApiNotFoundResponse,
 } from '@nestjs/swagger';
 import { User } from '../entities/user.entity';
 import { CreateUserDto } from '../dtos/create.user.dto';
@@ -95,7 +96,7 @@ export class UsersController {
         status: 400,
         description: 'Se produjo un error al buscar el usuario.'
     })
-    @ApiBadRequestResponse({
+    @ApiNotFoundResponse({
         status: 404,
         description: 'Usuario no encontrado.'
     })
