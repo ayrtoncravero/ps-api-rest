@@ -149,6 +149,16 @@ export class ProductsController {
     @ApiBadRequestResponse({
         description: 'El producto no pudo eliminarse.'
     })
+    @ApiNotFoundResponse({
+        status: 404,
+        description: 'Producto no encontrado',
+    })
+    @ApiParam({
+        name: 'id',
+        example: 1,
+        type: Number,
+        description: 'Representa un identificador unico del producto.',
+    })
     delete(@Param('id', ParseIntPipe) DeleteProductDto: number) {
         return this.ProductService.delete(DeleteProductDto);
     };
