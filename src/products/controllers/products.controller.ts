@@ -20,6 +20,7 @@ import {
     ApiBadRequestResponse,
     ApiBody,
     ApiParam,
+    ApiNotFoundResponse,
 } from '@nestjs/swagger';
 import { Product } from '../entities/product.entity';
 import { CreateProductDto } from 'src/products/dtos/create.product.dto';
@@ -90,7 +91,7 @@ export class ProductsController {
         name: 'id',
         example: 1,
         type: Number,
-        description: 'Representa un identificador unico del producto',
+        description: 'Representa un identificador unico del producto.',
     })
     @ApiBadRequestResponse({
         status: 400,
@@ -118,8 +119,18 @@ export class ProductsController {
         status: 400,
         description: 'No se pudo editar el producto',
     })
+    @ApiNotFoundResponse({
+        status: 404,
+        description: 'Producto no encontrado.'
+    })
     @ApiBody({
         type: Product,
+    })
+    @ApiParam({
+        name: 'id',
+        example: 1,
+        type: Number,
+        description: 'Representa un identificador unico del producto.',
     })
     update(@Param('id', ParseIntPipe) UpdateIdProductDto: number, @Body() UpdateProductDto: UpdateProductDto) {
         return this.ProductService.update(UpdateIdProductDto, UpdateProductDto);
