@@ -45,7 +45,7 @@ export class UsersController {
     })
     @ApiBadRequestResponse({
         status: 400,
-        description: 'No se pudo listar a los usuarios.',
+        description: 'Se produjo un error al buscar el usuario.',
     })
     getAll() {
         return this.UserService.findAll();
@@ -63,7 +63,7 @@ export class UsersController {
     })
     @ApiBadRequestResponse({
         status: 400,
-        description: 'El usuario no pudo ser creado.',
+        description: 'Se produjo un error al buscar el usuario.',
     })
     @ApiCreatedResponse({
         description: 'El usuario fue creado correctamente',
@@ -120,7 +120,7 @@ export class UsersController {
     })
     @ApiNotFoundResponse({
         status: 400,
-        description: 'No se pudo editar el usuario',
+        description: 'Se produjo un error al buscar el usuario.',
     })
     @ApiBody({
         type: User,
@@ -147,7 +147,7 @@ export class UsersController {
     })
     @ApiBadRequestResponse({
         status: 400,
-        description: 'El usuario no pudo eliminarse.',
+        description: 'Se produjo un error al buscar el usuario.',
     })
     @ApiNotFoundResponse({
         status: 404,
