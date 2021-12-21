@@ -19,6 +19,7 @@ import {
     ApiOperation,
     ApiBadRequestResponse,
     ApiBody,
+    ApiParam,
 } from '@nestjs/swagger';
 import { User } from '../entities/user.entity';
 import { CreateUserDto } from '../dtos/create.user.dto';
@@ -79,6 +80,12 @@ export class UsersController {
     @ApiOperation({
         summary: 'Obtiene un usuario por id.',
     })
+    @ApiParam({
+        name: 'id',
+        example: 1,
+        type: Number,
+        description: 'Representa un identificador unico del producto.',
+    })
     @ApiResponse({
         status: 200,
         description: 'Usuario encontrado.',
@@ -87,6 +94,10 @@ export class UsersController {
     @ApiBadRequestResponse({
         status: 400,
         description: 'Se produjo un error al buscar el usuario.'
+    })
+    @ApiBadRequestResponse({
+        status: 404,
+        description: 'Usuario no encontrado.'
     })
     getOne(@Param('id', ParseIntPipe) FindOneDto: number) {
         return this.UserService.findOne(FindOneDto);

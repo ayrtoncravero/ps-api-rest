@@ -97,7 +97,7 @@ export class ProductsController {
         status: 400,
         description: 'Se produjo un error al buscar el producto.',
     })
-    @ApiBadRequestResponse({
+    @ApiNotFoundResponse({
         status: 404,
         description: 'Producto no encontrado.'
     })
