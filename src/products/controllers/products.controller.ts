@@ -45,7 +45,7 @@ export class ProductsController {
     })
     @ApiBadRequestResponse({
         status: 400,
-        description: 'No se pudieron listar los productos.'
+        description: 'No se pudo listar a los productos.'
     })
     getAll() {
         return this.ProductService.findAll();
