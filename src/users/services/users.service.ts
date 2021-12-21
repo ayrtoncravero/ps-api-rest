@@ -65,7 +65,7 @@ export class UsersService {
         let user = await this.UserRepository.findOne(id);
 
         if(!user) {
-            throw new NotFoundException('No existe el El usuario no existe.');
+            throw new NotFoundException('No existe el usuario.');
         };
 
         await this.UserRepository.delete(id);
