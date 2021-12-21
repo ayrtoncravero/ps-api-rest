@@ -137,17 +137,21 @@ export class ProductsController {
     }
 
     @Delete(':id')
-    @HttpCode(203)
+    @HttpCode(200)
     @UsePipes(ValidationPipe)
     @ApiOperation({
         summary: 'Eliminacion de un producto.'
     })
     @ApiResponse({
-        status: 204,
+        status: 200,
         description: 'El producto fue eliminado con exito.'
     })
     @ApiBadRequestResponse({
         description: 'El producto no pudo eliminarse.'
+    })
+    @ApiBadRequestResponse({
+        status: 400,
+        description: 'No se pudo editar el producto',
     })
     @ApiNotFoundResponse({
         status: 404,
