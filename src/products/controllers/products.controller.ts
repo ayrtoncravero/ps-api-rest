@@ -47,6 +47,10 @@ export class ProductsController {
         status: 400,
         description: 'Se produjo un error al buscar el producto.'
     })
+    @ApiNotFoundResponse({
+        status: 404,
+        description: 'No se encontraron productos.'
+    })
     getAll() {
         return this.ProductService.findAll();
     };
@@ -57,9 +61,9 @@ export class ProductsController {
     @ApiOperation({
         summary: 'Crea un producto.',
     })
-    @ApiResponse({
+    @ApiCreatedResponse({
         status: 201,
-        description: 'El producto fue creado correctamente.'
+        description: 'El producto fue creado.'
     })
     @ApiBadRequestResponse({
         status: 400,
@@ -114,6 +118,7 @@ export class ProductsController {
     @ApiResponse({
         status: 200,
         description: 'El producto se actualizo correctamente.',
+        type: Product,
     })
     @ApiBadRequestResponse({
         status: 400,
@@ -147,11 +152,8 @@ export class ProductsController {
         description: 'El producto fue eliminado con exito.'
     })
     @ApiBadRequestResponse({
-        description: 'El producto no pudo eliminarse.'
-    })
-    @ApiBadRequestResponse({
         status: 400,
-        description: 'Se produjo un error al buscar el producto.',
+        description: 'El producto no pudo eliminarse.'
     })
     @ApiNotFoundResponse({
         status: 404,
