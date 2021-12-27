@@ -159,7 +159,7 @@ export class UsersController {
         type: Number,
         description: 'Representa un identificador unico del usuario.',
     })
-    async delete(@Param('id', ParseIntPipe) DeleteIdUserDto: number) {
-        return await this.UserService.delete(DeleteIdUserDto);
+    delete(@Param('id', ParseIntPipe) DeleteIdUserDto: number) {
+        return this.UserService.delete(DeleteIdUserDto);
     };
 }

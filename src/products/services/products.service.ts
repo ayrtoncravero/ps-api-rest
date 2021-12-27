@@ -15,6 +15,10 @@ export class ProductsService {
     async findAll() {
         let products = await this.ProductRepository.find();
 
+        if(!products) {
+            throw new NotFoundException('No existen productos.');
+        };
+
         validateProductExist(products);
 
         return products;
@@ -121,7 +125,8 @@ function validateBody(body: any) {
 };
 
 function validateProductExist(products: Product[]) {
-    if(!products) {
+    if(products.length === 0) {
         throw new NotFoundException('No hay productos para mostrar.');
     };
+    //QUITAR QUE DIRECTAMENTE ME DEVUELVA UN [], POR QUE QUE DEVUELVA UN [] NO ESTA MAL
 };
