@@ -134,10 +134,10 @@ describe('ProductsService', () => {
   describe('update', () => {
     it('should update a product', async () => {
       const dto: UpdateProductDto = {
-        name: 'remera',
-        price: 1000,
-        image: 'item-remera.jpg',
-        size: 'l',
+        name: 'pantalon',
+        price: 1200,
+        image: 'item-pantalon.jpg',
+        size: 'm',
       };
 
       expect(await service.update(1, dto)).toEqual({
@@ -147,10 +147,10 @@ describe('ProductsService', () => {
 
     it('should not found exception', async () => {
       const dto = {
-        name: 'remera',
-        price: 1000,
-        image: 'item-remera.jpg',
-        size: 'l',
+        name: 'pantalon',
+        price: 1200,
+        image: 'item-pantalon.jpg',
+        size: 'm',
       };
 
       mockProductRepository.findOne.mockReturnValueOnce(null);
