@@ -18,6 +18,7 @@ Para el desarrollo del proyecto se utilizo:
 - Swagger
 - Docker
 - Postgres
+- JestJs
 
 ## Iniciar proyecto
   Pasos para la correcta instalacion y funcionamiento de la app:
