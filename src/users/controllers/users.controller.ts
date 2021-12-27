@@ -127,7 +127,7 @@ export class UsersController {
         status: 400,
         description: 'El usuario no pudo eliminarse.',
     })
-    async delete(@Param('id', ParseIntPipe) DeleteIdUserDto: number) {
-        return await this.UserService.delete(DeleteIdUserDto);
+    delete(@Param('id', ParseIntPipe) DeleteIdUserDto: number) {
+        return this.UserService.delete(DeleteIdUserDto);
     };
 }

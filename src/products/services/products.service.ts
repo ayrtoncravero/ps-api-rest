@@ -4,7 +4,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { validImages } from '../enums/images.enum';
 import { size } from '../enums/size.enum';
-import { CreateProductDto } from '../dtos/create.product.dto';
 
 @Injectable()
 export class ProductsService {
@@ -15,6 +14,10 @@ export class ProductsService {
 
     async findAll() {
         let products = await this.ProductRepository.find();
+
+        if(!products) {
+            throw new NotFoundException('No existen productos.');
+        };
 
         validateProductExist(products);
 
@@ -122,7 +125,8 @@ function validateBody(body: any) {
 };
 
 function validateProductExist(products: Product[]) {
-    if(!products) {
+    if(products.length === 0) {
         throw new NotFoundException('No hay productos para mostrar.');
     };
+    //QUITAR QUE DIRECTAMENTE ME DEVUELVA UN [], POR QUE QUE DEVUELVA UN [] NO ESTA MAL
 };
