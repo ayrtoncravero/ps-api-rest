@@ -33,13 +33,24 @@ Para el desarrollo del proyecto se utilizo:
   3- Construir la imagen de docker: Para iniciar la imagen que contiene nuestra DB, en el root del proyecto correr el comando: `docker-compose up -d database`.
 
   4- Para iniciar el proyecto: Tenemos dos opciones:
-  - `npm run dev`: La más recomendada, ejecuta el servidor utilizando nodemon.
-  - `npm run start`: Ejecuta el servidor, pero al realizar cambios se debe reiniciar el servidor.
+    - `npm run dev`: La más recomendada, ejecuta el servidor utilizando nodemon.
+    - `npm run start`: Ejecuta el servidor, pero al realizar cambios se debe reiniciar el servidor.
 
   5- Para acceder a la base de datos postgres en el contenedor:
     - Comprobar que este corriendo el container: `docker ps`.
     - Para acceder al contenedor: `docker-compose exec database bash`.
     - Para acceder al servicio de postgres: `psql -h localhost -d nameDatabase -U userDatabase`, las credenciales se encuentran en el archivo 'docker-compose'.
+
+  6- Migraciónes:
+    - Generar las migraciones: `npm run migrations:generate -- nombreDeReferencia`.
+    - Correr migraciones: `npm run migrations:run`
+
+  7- Para correr los test:
+   - Los test se encuentran dentro de cada modulo respectivamente.
+   - Para ejecutar los test, correr el comando: `npm run test:watch`.
+   - Nos saldra un meno 'Watch usages', persionamos 'p', para filtrar el test.
+   - Luego, escribiremos el nombre de lo que queremos testear, ejemplo: 'products.controller'.
+   - Para salir precionar 'ctrl + c'.
 
 ### Documentacion de endpoints
   Se agrego la documentación utilizando Swagger, para acceder a ella se debe de iniciar el proyecto, corriendo el comando: `npm run dev` o `npm run start`, luego acceder en el navegador a la siguiente URL: http://localhost:3000/api/documentation/#/. En la misma pagina se va a encontrar detallado loda la informacion del consumo de la APi y la descripción de las entidades.
