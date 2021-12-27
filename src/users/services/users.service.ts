@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from '../dtos/create.user.dto';
+import console from 'console';
 
 @Injectable()
 export class UsersService {
@@ -56,7 +57,7 @@ export class UsersService {
             throw new NotFoundException('No existe el usuario.');
         };
 
-        this.UserRepository.merge(user, body);
+        let example = this.UserRepository.merge(user, body);
 
         this.UserRepository.save(user);
 

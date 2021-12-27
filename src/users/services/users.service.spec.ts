@@ -1,7 +1,8 @@
-import { NotFoundException } from '@nestjs/common';
+import { Body, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { CreateUserDto } from '../dtos/create.user.dto';
+import { UpdateUserDto } from '../dtos/update.user.dto';
 import { User } from '../entities/user.entity';
 import { UsersService } from './users.service';
 
@@ -34,17 +35,14 @@ describe('UsersService', () => {
         ...user,
       }),
     ),
-    update: jest.fn().mockImplementation((id, user: User) => 
+    merge: jest.fn().mockImplementation((user: User, body) => 
       Promise.resolve({
-        id,
-        ...user,
+        id: user.id,
+        ...body,
       }),
     ),
-    delete: jest.fn().mockImplementation((id) =>
-      Promise.resolve({
-        id,
-      }),
-    ),
+    delete: jest.fn().mockReturnThis(),
+    //Hacer el otro delete igual
   };
 
   beforeEach(async () => {
@@ -107,32 +105,19 @@ describe('UsersService', () => {
         email: 'pepitoperez@gmail.com',
       };
 
-      mockUserRepository.findOne.mockReturnValueOnce(null);
-
       expect(await service.create(dto)).toEqual({
         message: 'Se creo con exito el usuario.',
       });
     });
   });
 
-  /* describe('update', () => {
+  describe('update', () => {
     it('should update a user', async () => {
       const dto: UpdateUserDto = {
         name: 'juan',
         surname: 'rodriguez',
         email: 'juanrodriguez@gmail.com',
       };
-
-      mockUserRepository.findOne.mockResolvedValueOnce((id) => {
-        return {
-          id,
-          name: 'juan',
-          surname: 'rodriguez',
-          email: 'juanrodriguez@gmail.com',
-        };
-      });
-
-      mockUserRepository.findOne.mockReturnValueOnce(null);
 
       expect(await service.update(1, dto)).toEqual({
         message: 'Se actualizo con exito al usuario.',
@@ -154,9 +139,14 @@ describe('UsersService', () => {
         expect(error.message).toBe('No existe el usuario.');
       };
     });
-  }); */
+  });
 
   describe('delete', () => {
+    it('should delete a user', async () => {
+      expect(await service.delete(10)).toEqual({
+        message: 'Se elimino con exito el usuario.'
+      });
+    });
     it('should delete a user', async () => {
       mockUserRepository.findOne.mockReturnValueOnce(null);
 

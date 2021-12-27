@@ -36,19 +36,13 @@ describe('ProductsService', () => {
         size: 'l',
       });
     }),
-    update: jest.fn().mockImplementation((id, product: Product) => {
+    merge: jest.fn().mockImplementation((product: Product, body) => 
       Promise.resolve({
-        id,
-        ...product,
-      });
-    }),
-    //Por que el update me tira un error
-    /* merge: jest.fn().mockImplementation(()) */
-    delete: jest.fn().mockImplementation((id) => {
-      Promise.resolve({
-        id,
-      });
-    }), 
+        id: product.id,
+        ...body,
+      }),
+    ),
+    delete: jest.fn().mockReturnThis(),
   };
 
   beforeEach(async () => {
@@ -137,50 +131,38 @@ describe('ProductsService', () => {
   })
 
   //Esta fallando el merge, ver como moquearlo
-  /* describe('update', () => {
+  describe('update', () => {
     it('should update a product', async () => {
       const dto: UpdateProductDto = {
-        name: 'pantalon',
-        price: 1100,
-        image: 'item-pantalon.jpg',
-        size: 'm',   
+        name: 'remera',
+        price: 1000,
+        image: 'item-remera.jpg',
+        size: 'l',
       };
 
-      mockProductRepository.findOne.mockResolvedValueOnce((id) => {
-        return {
-          id,
-          name: 'pantalon',
-          price: 1100,
-          image: 'item-pantalon.jpg',
-          size: 'm',
-        };
-      });
-      
-      mockProductRepository.findOne.mockReturnValueOnce(null);
-
       expect(await service.update(1, dto)).toEqual({
-      message: 'Se edito con exito el producto.'
-    });
+        message: 'Se edito con exito el producto.',
+      });
     });
 
-    it('should return not found exception', async () => {
+    it('should not found exception', async () => {
       const dto = {
-        name: 'pantalon',
-        price: 1100,
-        image: 'item-pantalon.jpg',
-        size: 'm',
+        name: 'remera',
+        price: 1000,
+        image: 'item-remera.jpg',
+        size: 'l',
       };
 
       mockProductRepository.findOne.mockReturnValueOnce(null);
 
       try {
-        expect(await service.update(1, dto)).toThrow(NotFoundException); 
+        expect(await service.update(1, dto)).toThrow(NotFoundException);
       } catch(error) {
         expect(error.message).toBe('El producto no existe.');
-      }
+      };
     });
   });
- */
+
   describe('delete', () => {
     it('should deleted product', async () => {
       expect(await service.delete(1)).toEqual({
